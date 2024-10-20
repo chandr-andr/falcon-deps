@@ -2,11 +2,10 @@ import falcon.asgi
 import falcon.status_codes
 import falcon.testing
 import pytest
+from taskiq_dependencies import Depends
 
 from falcon_deps.resource import InjectableResource
 from tests.utils import construct_client
-from taskiq_dependencies import Depends
-
 
 pytestmark = pytest.mark.anyio
 
@@ -32,7 +31,8 @@ async def test_default_resource(
             "/test",
         )
 
-    assert result.status_code == 703
+    expected_status_code = 703
+    assert result.status_code == expected_status_code
 
 
 async def test_resource_with_func_dep(
@@ -117,9 +117,7 @@ async def test_resource_with_exclude_responder_from_inject(
     falcon_app.add_route(
         "/test",
         Resource(
-            exclude_responder_from_inject=set(
-                ["on_get"],
-            ),
+            exclude_responder_from_inject={"on_get"},
         ),
     )
 
@@ -128,4 +126,5 @@ async def test_resource_with_exclude_responder_from_inject(
             "/test",
         )
 
-    assert result.status_code == 500
+    expected_status_code = 500
+    assert result.status_code == expected_status_code

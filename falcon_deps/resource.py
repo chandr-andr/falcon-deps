@@ -1,10 +1,10 @@
 from typing import Any, Callable, Coroutine, Optional, Set, Union
 
-from falcon.routing.util import SuffixedMethodNotFoundError
 import falcon.asgi
-from taskiq_dependencies import DependencyGraph
-from falcon._typing import MethodDict
 from falcon import constants
+from falcon._typing import MethodDict
+from falcon.routing.util import SuffixedMethodNotFoundError
+from taskiq_dependencies import DependencyGraph
 
 
 def _map_http_methods(
@@ -12,7 +12,8 @@ def _map_http_methods(
     suffix: Optional[str] = None,
     exclude_responder_from_inject: Union[Set[str], None] = None,
 ) -> MethodDict:
-    """Map resource methods name to methods of a resource object.
+    r"""
+    Map resource methods name to methods of a resource object.
 
     The original of this function in in `falcon.routing.util.map_http_methods`.
 
@@ -96,7 +97,8 @@ class InjectableResource:
         suffix: Optional[str] = None,
         exclude_responder_from_inject: Union[Set[str], None] = None,
     ) -> None:
-        """Create new Resource handler with dependency injection.
+        """
+        Create new Resource handler with dependency injection.
 
         Create dependency graph for each responder in a resource,
         replace responders with wrapped responders with
@@ -134,7 +136,8 @@ class InjectableResource:
         ],
         Coroutine[Any, Any, None],
     ]:
-        """Wrapper for real responders in this resource.
+        """
+        Wrapper for real responders in this resource.
 
         ### Returns:
         Return new responders with dependency injection.

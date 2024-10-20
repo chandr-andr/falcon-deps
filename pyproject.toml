@@ -61,6 +61,7 @@ select = [
     "RUF", # Specific to Ruff checks
 ]
 ignore = [
+    "B008",    # Do not perform function call `Depends` in argument defaults
     "D105",    # Missing docstring in magic method
     "D107",    # Missing docstring in __init__
     "D212",    # Multi-line docstring summary should start at the first line
