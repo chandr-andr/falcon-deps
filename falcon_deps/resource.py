@@ -2,7 +2,7 @@ from typing import Any, Callable, Coroutine, Optional, Set, Union
 
 from falcon.routing.util import SuffixedMethodNotFoundError
 import falcon.asgi
-from taskiq_dependencies import DependencyGraph, Depends
+from taskiq_dependencies import DependencyGraph
 from falcon._typing import MethodDict
 from falcon import constants
 
@@ -161,24 +161,3 @@ class InjectableResource:
                 )
 
         return _handle_with_graph  # type: ignore
-
-
-async def dep1(request: falcon.asgi.Request = Depends()) -> int:
-    print(request.auth)
-    return 123
-
-
-class TestResource(InjectableResource):
-    async def on_get(
-        self,
-        request: falcon.asgi.Request,
-        response: falcon.asgi.Response,
-        dep1: int = Depends(dep1),
-    ) -> None:
-        print(dep1)
-
-
-def create_app():
-    app = falcon.asgi.App()
-    app.add_route("/test", TestResource())
-    return app
