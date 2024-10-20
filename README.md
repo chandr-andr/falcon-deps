@@ -57,8 +57,8 @@ If you want to use suffix with `InjectableResource` you need to pass suffix to `
 ```python
 app.add_route(
     "/test",
-    Resource(suffix="/bob",),
-    suffix="/bob",
+    Resource(suffix="bob",),
+    suffix="bob",
 )
 ```
 
