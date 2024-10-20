@@ -8,7 +8,7 @@ from tests.utils import construct_client
 from taskiq_dependencies import Depends
 
 
-pytestmark = pytest.mark.asyncio
+pytestmark = pytest.mark.anyio
 
 
 async def test_default_resource(
