@@ -1,8 +1,8 @@
 from typing import Any, Callable, Coroutine, Optional, Set, Union
 
-import falcon.asgi
 from falcon import constants
 from falcon._typing import MethodDict
+from falcon.asgi import Request, Response
 from falcon.routing.util import SuffixedMethodNotFoundError
 from taskiq_dependencies import DependencyGraph
 
@@ -130,8 +130,8 @@ class InjectableResource:
         responder_name: str,
     ) -> Callable[
         [
-            falcon.asgi.Request,
-            falcon.asgi.Response,
+            Request,
+            Response,
             Any,
         ],
         Coroutine[Any, Any, None],
@@ -146,13 +146,13 @@ class InjectableResource:
         graph = self.graph_map[responder_name]
 
         async def _handle_with_graph(
-            request: falcon.asgi.Request,
-            response: falcon.asgi.Response,
+            request: Request,
+            response: Response,
             **params: Any,
         ) -> None:
             async with graph.async_ctx(
                 {
-                    falcon.asgi.Request: request,
+                    Request: request,
                 },
             ) as ctx:
                 dep_kwargs = await ctx.resolve_kwargs()
