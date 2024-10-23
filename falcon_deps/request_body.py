@@ -11,7 +11,7 @@ class RequestBody:
     """
     Get and validate body from request.
 
-    This dependency grabs form data and validates
+    This dependency grabs request body and validates
     it against given schema.
 
     You should provide schema with typehints.
