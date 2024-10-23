@@ -30,7 +30,6 @@ class RequestBody:
 
         try:
             request_body = json.loads(request_body_bytes.decode("utf-8"))
-            print(request_body)
         except (ValueError, UnicodeDecodeError):
             description = (
                 "Could not decode the request body. The "
