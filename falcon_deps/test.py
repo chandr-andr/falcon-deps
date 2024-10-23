@@ -18,18 +18,14 @@ class TestData:
     test: str
 
 
-def dep1(test_data: TestData = Depends(RequestBody())) -> TestData:
-    return test_data
-
-
 class TestRes(InjectableResource):
     async def on_post(
         self,
         request: Request,
         response: Response,
-        dep1: TestData = Depends(dep1),
+        test_data: TestData = Depends(RequestBody()),
     ) -> None:
-        print("result", dep1)
+        print("result", test_data)
 
 
 def get_app() -> App:
