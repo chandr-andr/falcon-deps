@@ -1,7 +1,7 @@
-import falcon.asgi
 import falcon.status_codes
 import falcon.testing
 import pytest
+from falcon.asgi import App, Request, Response
 from taskiq_dependencies import Depends
 
 from falcon_deps.resource import InjectableResource
@@ -11,13 +11,13 @@ pytestmark = pytest.mark.anyio
 
 
 async def test_default_resource(
-    falcon_app: falcon.asgi.App,
+    falcon_app: App,
 ) -> None:
     class Resource:
         async def on_get(
             self,
-            request: falcon.asgi.Request,
-            response: falcon.asgi.Response,
+            request: Request,
+            response: Response,
         ) -> None:
             response.status = falcon.HTTP_703
 
@@ -36,16 +36,16 @@ async def test_default_resource(
 
 
 async def test_resource_with_func_dep(
-    falcon_app: falcon.asgi.App,
+    falcon_app: App,
 ) -> None:
-    def dep_one(request: falcon.asgi.Request = Depends()) -> str:
+    def dep_one(request: Request = Depends()) -> str:
         return str(request)
 
     class Resource(InjectableResource):
         async def on_get(
             self,
-            request: falcon.asgi.Request,
-            response: falcon.asgi.Response,
+            request: Request,
+            response: Response,
             dep_one: str = Depends(dep_one),
         ) -> None:
             response.text = dep_one
@@ -64,20 +64,20 @@ async def test_resource_with_func_dep(
 
 
 async def test_resource_with_class_dep(
-    falcon_app: falcon.asgi.App,
+    falcon_app: App,
 ) -> None:
     class DepOne:
         def __init__(
             self,
-            request: falcon.asgi.Request = Depends(),
+            request: Request = Depends(),
         ) -> None:
             self.request = request
 
     class Resource(InjectableResource):
         async def on_get(
             self,
-            request: falcon.asgi.Request,
-            response: falcon.asgi.Response,
+            request: Request,
+            response: Response,
             dep_one: DepOne = Depends(DepOne),
         ) -> None:
             response.text = str(dep_one.request)
@@ -96,20 +96,20 @@ async def test_resource_with_class_dep(
 
 
 async def test_resource_with_exclude_responder_from_inject(
-    falcon_app: falcon.asgi.App,
+    falcon_app: App,
 ) -> None:
     class DepOne:
         def __init__(
             self,
-            request: falcon.asgi.Request = Depends(),
+            request: Request = Depends(),
         ) -> None:
             self.request = request
 
     class Resource(InjectableResource):
         async def on_get(
             self,
-            request: falcon.asgi.Request,
-            response: falcon.asgi.Response,
+            request: Request,
+            response: Response,
             dep_one: DepOne = Depends(DepOne),
         ) -> None:
             response.text = str(dep_one.request)

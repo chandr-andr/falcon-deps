@@ -76,3 +76,8 @@ app.add_route(
     ),
 )
 ```
+
+## Built-in dependencies
+There are some built-in dependencies that can make easier building your applications.
+
+### RequestData
