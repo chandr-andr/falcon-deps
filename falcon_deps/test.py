@@ -28,6 +28,22 @@ class TestRes(InjectableResource):
         print("result", test_data)
 
 
+def dep_for_test_res_2(request: Request = Depends()) -> Request:
+    return request
+
+
+class TestRes2(InjectableResource):
+    async def on_post(
+        self,
+        request: Request,
+        response: Response,
+        test_data: TestData = Depends(RequestBody()),
+        req_from_dep: Request = Depends(dep_for_test_res_2),
+    ) -> None:
+        print("result", test_data)
+        print("request", req_from_dep)
+
+
 def get_app() -> App:
     app = App()
     app.add_route("/test", TestRes())
