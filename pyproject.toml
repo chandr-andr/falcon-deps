@@ -9,8 +9,7 @@ readme = "README.md"
 python = "^3.9"
 taskiq-dependencies = "^1.5.4"
 falcon = "^4.0.0"
-uvicorn = "^0.32.0"
-aiohttp = "^3.10.10"
+pydantic = "^2.9.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -18,6 +17,8 @@ pytest = "^8.3.3"
 ruff = "^0.7.0"
 mypy = "^1.12.1"
 anyio = "^4.6.2.post1"
+uvicorn = "^0.32.0"
+aiohttp = "^3.10.10"
 
 [tool.mypy]
 strict = true
